@@ -81,7 +81,7 @@ analytics:
 # Site Author
 author:
   name             : "Chloe Rickards"
-  avatar           : "headshot.png"
+  avatar           : "images/headshot.png"
   bio              : "Data scientist, statistical programmer, and mathmatical modeler with a focus on biological sciences. Rock climber and artist in my spare time"
   location         : "Santa Cruz, CA"
   employer         :
