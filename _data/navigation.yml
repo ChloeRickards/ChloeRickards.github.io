@@ -4,10 +4,7 @@ main:
     url: /publications/      
     
   - title: "Disease Models"
-    url: /diseasemodels/
+    url: https://chloerickards.shinyapps.io/diseasemodels/
     
   - title: "COVID-19 and Income Equality"
     url: /covid19/
-
-  - title: "test"
-    url: https://chloerickards.shinyapps.io/diseasemodels/
