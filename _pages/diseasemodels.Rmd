@@ -1,6 +1,8 @@
 ---
 title: "Compartmental Epidemiological Models"
 author: "Chloe Rickards"
+permalink: /diseasemodels/
+author_profile: true
 output: html_document
 runtime: shiny
 ---
