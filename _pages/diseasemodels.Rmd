@@ -1,7 +1,6 @@
 ---
 title: "Compartmental Epidemiological Models"
 author: "Chloe Rickards"
-date: "9/22/2022"
 output: html_document
 runtime: shiny
 ---
