@@ -1,0 +1,442 @@
+---
+title: "Compartmental Epidemiological Models"
+author: "Chloe Rickards"
+date: "9/22/2022"
+output: html_document
+runtime: shiny
+---
+
+```{css, echo=FALSE}
+p {
+  font-size: 18px;
+}
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+library(deSolve)
+library(ggplot2)
+library(shinythemes)
+```
+
+## Introduction
+
+Infectious diseases can be deterministically modeled using compartmental ordinary differential equations. This theoretical mathematical approach can give epidemiologists and public health experts insight into the nature of an epidemic, anticipate the spread of a disease, and predict how resources such as vaccines should be allocated. These theoretical models do not capture every detail of an epidemic, but they are often a good starting point. 
+
+This page contains three different interactive compartmental epidemiological models, starting from simple to more complicated. Where possible, default (starting) parameters for each model are derived from the first peak of COVID-19 in New York City in March 2020 (Rickards & Kilpatrick, in peer review). Other parameters are derived from elsewhere in the literature (Carcione et al. 2020, Bjornstad et al. 2020, Chen et al. 2021).
+
+## S-I Model
+
+We can start by compartmentalizing a population into two different sub-populations. Given a total population of N, let's start simple and categorize the population into Susceptible (S) and Infected (I), such that:
+
+$$\frac{dS}{dt} = r_b N-\frac{\beta S I}{N} - r_d S$$
+$$\frac{dI}{dt} = \frac{\beta S I}{N}-\alpha I - r_d I$$
+
+$$N(t) = S(t) + I(t)$$
+where $r_b$ is the natural birth rate, $r_d$ is the natural death rate, $\alpha$ is the infection-caused death rate, and $\beta$ is the transmission rate. $r_b$ and $r_d$ are assumed to be roughly equal. 
+
+Below, you can use the sliders to change these parameters and see how the behavior of the epidemic changes. The peak (when $I(t)$ is largest) prevalence and the endemic (equilibrium) prevalence are shown as a fraction of the total population. The starting population consists of 100 total individuals, with 99 Susceptibles and one Infected.
+
+
+```{r SI, echo = FALSE}
+ui_SI <- fluidPage(theme = shinytheme("journal"),
+                withMathJax(),
+                fluidRow(
+                  column(6, sliderInput(inputId = "rb",
+                              label = withMathJax("Natural birth rate"),
+                              min = 0,
+                              max = 0.03,
+                              value = 0.01,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rd",
+                              label = "Natural death rate",
+                              min = 0,
+                              max = 0.01,
+                              value = 0.005,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "beta",
+                              label = withMathJax("Infection rate, \\(\\beta\\)"),
+                              min = 0,
+                              max = 0.9,
+                              value = 0.75,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "alpha",
+                              label = "Infection-caused death rate, \\(\\alpha\\)",
+                              min = 0,
+                              max = 0.05,
+                              value = 0.01,
+                              ticks = FALSE))
+                ),
+                fluidRow(plotOutput(outputId = "SIPlot")),
+                fluidRow(
+                  column(12, align = "center", div(style = "font-size:150%", tableOutput(outputId = "stats")))
+                )
+)
+
+# Model
+SI <- function(Time, State, Pars) { #function describing model
+  with(as.list(c(State, Pars)), {
+    dS = rb*N - beta*S*I/N - rd*S
+    dI = +beta*S*I/N - alpha*I - rd*I
+    dN = dS + dI
+    return(list(c(dS,dI,dN)))  }) }
+
+yini_SI = c(S = 99,I = 1,N = 100) #initial conditions
+times_SI = seq(0, 100, by = 1) #time steps we want values of the model
+
+getSI <- function(rb, rd, beta, alpha){
+  pars_SI = data.frame(rb, rd, beta, alpha)
+  
+  return(as.data.frame(ode(yini_SI, times_SI, SI, pars_SI)))
+}
+
+
+# Define server logic required to draw a graph
+server_SI <- function(input, output) {
+  
+  out <- reactive({
+    getSI(input$rb, input$rd, input$beta, input$alpha)
+  })
+  
+  output$SIPlot <- renderPlot({
+    ggplot(out(), aes(x = out()[,1]))+
+      geom_line(aes(y=out()[, 2], color = "Susceptible"), size = 1.5)+
+      geom_line(aes(y=out()[, 3], color = "Infected"), size = 1.5)+
+      geom_line(aes(y=out()[, 4], color = "Total (N)"), size = 1.5)+
+      scale_color_manual("", breaks = c("Susceptible","Infected", "Total (N)"),
+                         values = c("skyblue", "firebrick", "black"))+
+      xlab("Time")+
+      ylab("Population")+
+      ggtitle("SI Plot")+
+      theme(plot.title = element_text(size = 25, hjust = 0.5),
+            legend.position = "top", legend.text = element_text(size = 20),
+            axis.text = element_text(size = 20), axis.title = element_text(size = 20))
+  })
+  
+  output$stats <- renderTable({
+    data.frame('Descriptive Statistic' = c("Peak Prevalence",
+                                           "Endemic Prevalence"),
+               Value =  c(max(out()$I) / out()$N[out()$I == max(out()$I)],
+                          out()$I[length(times_SI)] / out()$N[length(times_SI)]),
+               check.names = FALSE)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui_SI, server = server_SI, options = list(height = 750))
+```
+
+
+## S-I-R Model
+
+After the infection runs its course, an individual will start to produce antibodies to an infectious disease. This creates a Recovered (R) category, in which recovered individuals cannot be reinfected with the disease in question. With this additional category, we can create an S-I-R model, where:
+
+$$\frac{dS}{dt} = r_b N-\frac{\beta S I}{N} - r_d S + \rho R$$
+
+$$\frac{dI}{dt} = \frac{\beta S I}{N}-\alpha I - r_d I - \gamma I$$
+
+$$\frac{dR}{dt} = \gamma I - \rho R - r_d R$$
+
+$$N(t) = S(t) + I(t) + R(t)$$
+
+Two additional parameters have been introduced. First, $\gamma$, the recovery rate, dictates how quickly individuals recover from the infection. Second, $\rho$, the seroreversion rate, indicates how quickly individuals lose their immunity.
+
+Below, you can use the sliders to change these parameters and see how the behavior of the epidemic changes. The peak prevalence and the endemic prevalence are shown along with two new descriptive statistics: $R_0$ and the herd immunity threshold. $R_0$, or "R nought," is the basic reproduction rate of a disease. $R_0$ is the number of secondary infections that a single infection will cause -- for example, if $R_0$ is 2.7, then a sick person will get 2-3 more people sick. The herd immunity threshold is the proportion of the population that need to be either immune or vaccinated in order to stop the epidemic from continuing. $R_0$ and the herd immunity threshold are given as follows:
+
+$$R_0 = \frac{\beta}{\alpha + \gamma + r_d}$$
+$$Herd \ immunity \ threshold = 1-\frac{1}{R_0}$$
+
+The starting population consists of 100 total individuals, with 99 Susceptibles and one Infected, and zero Recovered.
+
+```{r SIR, echo=FALSE}
+# Define UI for application that draws a histogram
+ui_SIR <- fluidPage(theme = shinytheme("journal"),
+                withMathJax(),
+                fluidRow(
+                  column(6, sliderInput(inputId = "rb",
+                              label = withMathJax("Natural birth rate"),
+                              min = 0,
+                              max = 0.03,
+                              value = 0.01,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rd",
+                              label = "Natural death rate",
+                              min = 0,
+                              max = 0.01,
+                              value = 0.005,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "beta",
+                              label = withMathJax("Infection rate, \\(\\beta\\)"),
+                              min = 0,
+                              max = 0.9,
+                              value = 0.75,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "alpha",
+                              label = "Infection-caused death rate, \\(\\alpha\\)",
+                              min = 0,
+                              max = 0.05,
+                              value = 0.01,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "gamma",
+                              label = withMathJax("Recovery rate, \\(\\gamma\\)"),
+                              min = 0,
+                              max = 0.4,
+                              value = 0.2,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rho",
+                              label = "Seroreversion rate, \\(\\rho\\)",
+                              min = 0,
+                              max = 0.003,
+                              value = 0.0015,
+                              ticks = FALSE))
+                ),
+                fluidRow(plotOutput(outputId = "SIRPlot")),
+                fluidRow(
+                  column(12, align = "center", div(style = "font-size:150%", tableOutput(outputId = "stats")))
+                )
+)
+
+# Model
+SIR <- function(Time, State, Pars) { #function describing model
+  with(as.list(c(State, Pars)), {
+    dS= rb*N - beta*S*I/N - rd*S + rho*R
+    dI= beta*S*I/N - alpha*I - gamma*I - rd*I
+    dR= gamma*I - rd*R - rho*R
+    dN= dS + dI + dR
+    return(list(c(dS, dI, dR, dN)))  }) }
+
+yini_SIR = c(S = 99,I = 1,R = 0,N = 100) #initial conditions
+times_SIR = seq(0, 100, by = 1) #time steps we want values of the model
+
+getSIR <- function(rb, rd, beta, alpha, gamma, rho){
+  pars_SIR = data.frame(rb, rd, beta, alpha, gamma, rho)
+  
+  return(as.data.frame(ode(yini_SIR, times_SIR, SIR, pars_SIR)))
+}
+
+
+# Define server logic required to draw a graph
+server_SIR <- function(input, output) {
+  
+  out <- reactive({
+    getSIR(input$rb, input$rd, input$beta, input$alpha, input$gamma, input$rho)
+  })
+  
+  output$SIRPlot <- renderPlot({
+    ggplot(out(), aes(x= out()[,1]))+
+      geom_line(aes(y=out()[, 2], color = "Susceptible"), size = 1.5)+
+      geom_line(aes(y=out()[, 3], color = "Infected"), size = 1.5)+
+      geom_line(aes(y=out()[, 4], color = "Recovered"), size = 1.5)+
+      geom_line(aes(y=out()[, 5], color = "Total (N)"), size = 1.5)+
+      scale_color_manual("", breaks = c("Susceptible","Infected","Recovered", "Total (N)"),
+                         values = c("skyblue", "firebrick", "limegreen", "black"))+
+      xlab("Days")+
+      ylab("Population")+
+      ggtitle("SIR Plot")+
+      theme(plot.title = element_text(size = 25, hjust = 0.5),
+            legend.position = "top", legend.text = element_text(size = 20),
+            axis.text = element_text(size = 20), axis.title = element_text(size = 20))
+  })
+  
+  output$stats <- renderTable({
+    data.frame('Descriptive Statistic' = c("Peak Prevalence",
+                                           "Endemic Prevalence",
+                                           "R0",
+                                           "Herd Immunity Threshold"),
+               Value =  c(max(out()$I / out()$N),
+                          out()$I[length(times_SIR)] / out()$N[length(times_SIR)],
+                          if ((input$alpha + input$gamma + input$rd) == 0) {
+                            Inf
+                          } else {
+                            input$beta / (input$alpha+input$gamma + input$rd)},
+                          if ((input$alpha + input$gamma)==0){
+                            NA
+                          } else if (input$beta / (input$alpha + input$gamma + input$rd) > 1){
+                            1 - (1 / (input$beta / (input$alpha+input$gamma + input$rd)))
+                          } else {
+                            NA
+                          }), check.names = FALSE)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui_SIR, server = server_SIR, options = list(height = 900))
+```
+ 
+ 
+## S-E-I-R Model
+
+Finally, we can introduce a fourth class: Exposed individuals. The Exposed class takes into account the time between exposure to a pathogen and the beginning of the infectious period. The system of differential equations is as follows:
+
+$$\frac{dS}{dt} = r_b N-\frac{\beta S I}{N} - r_d S + \rho R$$
+
+$$\frac{dE}{dt} = \frac{\beta S I}{N}-\lambda E - r_d E$$
+
+
+$$\frac{dI}{dt} = \lambda E - \alpha I - r_d I - \gamma I$$
+
+$$\frac{dR}{dt} = \gamma I - \rho R - r_d R$$
+
+$$N(t) = S(t) + E(t) + I(t) + R(t)$$
+
+The new parameter introduced is $\lambda$, which dictates the latency period. Now, when finding $R_0$, we have to account for the possibility of the exposed person dying (thus becoming removed from the population entirely) rather than continuing into the Infected class. So, the new $R_0$ is as follows:
+
+$$R_0 = \frac{\lambda}{\lambda + r_d} \times \frac{\beta}{\alpha + \gamma + r_d}$$
+
+The starting population consists of 100 total individuals, with 99 Susceptibles, one Exposed, zero Infected, and zero Recovered. All exposed individuals are assumed to either die from natural causes or become infected. Below, you can use the sliders to change these parameters and see how the behavior of the epidemic changes. $R_0$, peak prevalence, endemic (equilibrium) prevalence, and herd immunity threshold are all shown below.
+
+
+```{r SEIR, echo=FALSE}
+# Define UI for application that draws a histogram
+ui_SEIR <- fluidPage(theme = shinytheme("journal"),
+                withMathJax(),
+                fluidRow(
+                  column(6, sliderInput(inputId = "rb",
+                              label = withMathJax("Natural birth rate"),
+                              min = 0,
+                              max = 0.03,
+                              value = 0.01,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rd",
+                              label = "Natural death rate",
+                              min = 0,
+                              max = 0.01,
+                              value = 0.005,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "beta",
+                              label = withMathJax("Infection rate, \\(\\beta\\)"),
+                              min = 0,
+                              max = 0.9,
+                              value = 0.75,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "alpha",
+                              label = "Infection-caused death rate, \\(\\alpha\\)",
+                              min = 0,
+                              max = 0.05,
+                              value = 0.01,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(4, sliderInput(inputId = "gamma",
+                              label = withMathJax("Recovery rate, \\(\\gamma\\)"),
+                              min = 0,
+                              max = 0.4,
+                              value = 0.2,
+                              ticks = FALSE)),
+                  column(4, sliderInput(inputId = "rho",
+                              label = "Seroreversion rate, \\(\\rho\\)",
+                              min = 0,
+                              max = 0.003,
+                              value = 0.0015,
+                              ticks = FALSE)),
+                  column(4, sliderInput(inputId = "lambda",
+                              label = "Latency rate, \\(\\lambda\\)",
+                              min = 0,
+                              max = 0.4,
+                              value = 0.2,
+                              ticks = FALSE))
+                ),
+                fluidRow(plotOutput(outputId = "SEIRPlot")),
+                fluidRow(
+                  column(12, align = "center", div(style = "font-size:150%", tableOutput(outputId = "stats")))
+                )
+)
+
+# Model
+SEIR <- function(Time, State, Pars) { #function describing model
+  with(as.list(c(State, Pars)), {
+    dS = rb*N - beta*S*I/N - rd*S + rho*R
+    dE = beta*S*I/N - lambda*E - rd*E
+    dI = lambda*E - alpha*I - gamma*I - rd*I
+    dR = gamma*I - rd*R - rho*R
+    dN = dS + dE + dI + dR
+    return(list(c(dS, dE, dI, dR, dN)))  }) }
+
+yini_SEIR  = c(S = 99, E = 1, I = 0, R = 0, N = 100) #initial conditions
+times_SEIR = seq(0, 100, by = 1) #time steps we want values of the model
+
+getSEIR <- function(rb, rd, beta, alpha, gamma, rho, lambda){
+  pars_SEIR = data.frame(rb, rd, beta, alpha, gamma, rho, lambda)
+  
+  return(as.data.frame(ode(yini_SEIR, times_SEIR, SEIR, pars_SEIR)))
+}
+
+
+# Define server logic required to draw a graph
+server_SEIR <- function(input, output) {
+  
+  out <- reactive({
+    getSEIR(input$rb, input$rd, input$beta, input$alpha, input$gamma, input$rho, input$lambda)
+  })
+  
+  output$SEIRPlot <- renderPlot({
+    ggplot(out(), aes(x= out()[, 1]))+
+      geom_line(aes(y=out()[, 2], color = "Susceptible"), size = 1.5)+
+      geom_line(aes(y=out()[, 3], color = "Exposed"), size = 1.5)+
+      geom_line(aes(y=out()[, 4], color = "Infected"), size = 1.5)+
+      geom_line(aes(y=out()[, 5], color = "Recovered"), size = 1.5)+
+      geom_line(aes(y=out()[, 6], color = "Total (N)"), size = 1.5)+
+      scale_color_manual("", breaks = c("Susceptible", "Exposed", "Infected", "Recovered", "Total (N)"),
+                         values = c("skyblue", "darkorange", "firebrick", "limegreen", "black"))+
+      xlab("Days")+
+      ylab("Population")+
+      ggtitle("SEIR Plot")+
+      theme(plot.title = element_text(size = 25, hjust = 0.5),
+            legend.position = "top", legend.text = element_text(size = 20),
+            axis.text = element_text(size = 20), axis.title = element_text(size = 20))
+  })
+  
+  output$stats <- renderTable({
+    data.frame('Descriptive Statistic' = c("Peak Prevalence",
+                                           "Endemic Prevalence",
+                                           "R0",
+                                           "Herd Immunity Threshold"),
+               Value = c(max(out()$I/out()$N),
+               out()$I[length(times_SEIR)]/out()$N[length(times_SEIR)],
+               if (input$alpha + input$gamma + input$rd == 0){
+                 Inf
+               } else if (input$lambda + input$rd == 0){
+                 Inf
+               } else{
+                 input$lambda*input$beta/((input$lambda+input$rd)*(input$alpha+input$gamma+input$rd))
+               },
+               if (input$lambda*input$beta/((input$lambda+input$rd)*(input$alpha+input$gamma+input$rd)) >1){
+                 1 - 1/(input$lambda*input$beta/((input$lambda+input$rd)*(input$alpha+input$gamma+input$rd)))
+               } else{
+                 NA
+               }),
+               check.names = FALSE)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui_SEIR, server = server_SEIR, options = list(height = 900))
+```
+ 
+
+
+### References and Acknowledgments:
+
+Thank you to Marm Kilpatrick and the Kilpatrick lab for feedback and discussion on this topic.
+
+Bjørnstad, O.N., Shea, K., Krzywinski, M. et al. The SEIRS model for infectious disease dynamics. Nat Methods 17, 557–558 (2020). https://doi.org/10.1038/s41592-020-0856-2
+
+Carcione JM, Santos JE, Bagaini C and Ba J (2020) A Simulation of a COVID-19 Epidemic Based on a Deterministic SEIR Model. Front. Public Health 8:230. https://doi.org/10.3389/fpubh.2020.00230
+
+Chen S, Flegg JA, White LJ, Aguas R (2021) Levels of SARS-CoV-2 population exposure are considerably higher than suggested by seroprevalence surveys. PLoS Comput Biol 17(9): e1009436. https://doi.org/10.1371/journal.pcbi.1009436
+
+Jones, JH (2007) Notes on $R_0$.Department of Anthropology, Stanford University. https://web.stanford.edu/~jhj1/teachingdocs/Jones-on-R0.pdf
+
+Systematic Investor. (2013). Retirement: simulating wealth with random returns, inflation and withdrawals. https://shiny.rstudio.com/gallery/retirement-simulation.html 
+
+NYC Health (2021) Health Department Releases 2019 Annual Vital Statistics Data. Bureau of Vital Statistics. https://www1.nyc.gov/site/doh/data/data-sets/vital-statistics-data.page
+
