@@ -1,6 +1,6 @@
 ---
 permalink: /
-title: "Chloe Rickards' Resume and Portfolio"
+title: ""
 excerpt: "About me"
 author_profile: true
 redirect_from: 
@@ -28,7 +28,8 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 
 # Skills
 
-Python (numpy, pandas, matplotlib) | R (tidyverse, ggplot) | Stan | MATLAB | LaTeX | Java | Bayesian Inference | Markov chain Monte Carlo | Mathematical modeling | DNA Sequencing | Adobe Suite | Microsoft Office
+**Programming Languages:** Python (numpy, pandas, matplotlib), R (tidyverse, ggplot), Stan, MATLAB, LaTeX, Java
+**Additional Skills:** Bayesian inference, Markov chain Monte Carlo, Mathematical modeling, DNA sequencing, Adobe Suite, Microsoft Office
 
 # Awards
 
@@ -38,26 +39,26 @@ Coha-Gunderson Prize in Speculative Futures (2022)
 
 # Experience
 
-#### Graduate Student Researcher, 09/2020 – 09/2022, University of California Santa Cruz, Santa Cruz, CA
+### Graduate Student Researcher, 09/2020 – 09/2022, University of California Santa Cruz, Santa Cruz, CA
 * Estimated Infection Fatality Rate (IFR) of COVID-19 in New York City from serology, case, and death data
 * Applied Fourier transforms, Bayesian inference, and a No U-Turn Sampler (NUTS) to infer undiagnosed infections and test for maximum likelihood among IFR estimates
 * Assessed several IFRs across the globe for patterns in age-specific mortality and determined potential causes for the patterns observed, including wealth inequality and underlying conditions
 * Findings in press, with a preprint available at: https://bit.ly/3abTiVg 
 
-#### Teaching Assistant, 09/2020 – 08/2022, University of California Santa Cruz, Santa Cruz, CA
+### Teaching Assistant, 09/2020 – 08/2022, University of California Santa Cruz, Santa Cruz, CA
 * BIOE 109: Evolution, Fall 2020
 * BIOE 107: Ecology, Spring 2021
 * COSMOS: Entomology, Summer 2022
 
-#### MINT Program Mentor, 09/2021-06/2022, University of California Santa Cruz, Santa Cruz, CA
+### MINT Program Mentor, 09/2021-06/2022, University of California Santa Cruz, Santa Cruz, CA
 * Mentor undergraduate students in the process of applying to graduate schools
 * Provide undergraduate students with opportunities to gain lab and field experience
 
-#### Postbac Student Researcher, 06/20218– 08/2020, University of California Santa Cruz, Santa Cruz, CA
+### Postbac Student Researcher, 06/20218– 08/2020, University of California Santa Cruz, Santa Cruz, CA
 * Compared the lifespans and environmental persistence of 150 parasites and pathogens; found that diseases with environmental components are more difficult to control and eradicate
 * Published findings available at: https://bit.ly/3c30owl 
 
-#### Undergraduate Student Researcher, 06/2015 – 06/2018, University of California Santa Cruz, Santa Cruz, CA
+### Undergraduate Student Researcher, 06/2015 – 06/2018, University of California Santa Cruz, Santa Cruz, CA
 * Constructed a stochastic model of the population genetics of the freshwater snail responsible for transmitting schistosomiasis, a Neglected Tropical Disease and a disease of poverty 
 * Projected theoretical changes to local disease burden after introducing a CRISPR/Cas9-mediated gene drive designed to confer resistance to the snail hosts
 * Findings in press, with a preprint available at: https://bit.ly/3Mxg4oa 
