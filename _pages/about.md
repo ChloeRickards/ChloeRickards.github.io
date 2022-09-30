@@ -29,6 +29,7 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 # Skills
 
 **Programming Languages:** Python (numpy, pandas, matplotlib), R (tidyverse, ggplot), Stan, MATLAB, LaTeX, Java
+
 **Additional Skills:** Bayesian inference, Markov chain Monte Carlo, Mathematical modeling, DNA sequencing, Adobe Suite, Microsoft Office
 
 # Awards
