@@ -53,7 +53,7 @@ Coha-Gunderson Prize in Speculative Futures (2022)
 
 ### Podcast Producer, 09/2021 - 10/2022, University of California Santa Cruz, Santa Cruz, CA
 * Interviewed local biologists and conservationists for the [Santa Cruz Naturalist](https://open.spotify.com/show/22DGQdylvM6tGIsswFVGS2?si=496c657d036741cf) podcast
-* Mixed and edited podcast content to be suitable for a general audience
+* Mixed and edited podcast content to air on a local radio station for a general audience
 
 ### MINT Program Mentor, 09/2021-06/2022, University of California Santa Cruz, Santa Cruz, CA
 * Mentored undergraduate students in the process of applying to graduate schools
