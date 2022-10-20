@@ -1,5 +1,5 @@
-<div class="embed-spotify-song">
-    <iframe src="https://open.spotify.com/embed/track/{{ include.id }}"  
+<div class="embed-spotify-episode">
+    <iframe src="https://open.spotify.com/embed/episode/{{ include.id }}"  
         frameborder="0" 
         allowtransparency="true" 
         allow="encrypted-media">
