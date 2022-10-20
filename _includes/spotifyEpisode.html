@@ -1,0 +1,23 @@
+.embed-spotify-episode {
+  width: 300px;
+  height: 80px;
+  position: relative;
+  max-width: 100%;
+}
+
+.embed-spotify-episode iframe, .embed-spotify object, .embed-spotify embed {
+  position: absolute;
+  width: 300px;
+  height: 80px;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+}
+
+<div class="embed-spotify-episode">
+    <iframe src="https://open.spotify.com/embed/episode/{{ include.id }}"  
+        frameborder="0" 
+        allowtransparency="true" 
+        allow="encrypted-media">
+    </iframe>
+</div>
