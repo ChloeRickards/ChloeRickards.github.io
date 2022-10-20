@@ -9,11 +9,9 @@ author_profile: true
 
 {% include spotifyEpisode.html id="4nH1yE0p9bElMRYa26maEW" %}
 
-{% include spotifyEpisode.html id="4nH1yE0p9bElMRYa26maEW?" %}
+{% spotifyEpisode.html id="4nH1yE0p9bElMRYa26maEW" %}
 
-{% include spotifyEpisode.html id="4nH1yE0p9bElMRYa26maEW?si=dc7683fe3afb4b4c" %}
 
-{% include spotifyEpisode.html id="dc7683fe3afb4b4c" %}
 
 
 For each episode:
