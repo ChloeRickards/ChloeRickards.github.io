@@ -15,6 +15,8 @@ The parasitic larvae enter the bloodstream when people come into contact with in
 
 Schistosomiasis can be prevented in several ways along the schistosome life cycle, as shown in **Figure 1.** Clean water and sanitation prevents worm larvae from reaching humans and prevents egg-infested excrement from reaching the snails, but is difficult to implement. Adult worms in humans can be treated with the anti-parasite drug praziquantel, but this drug does not prevent reinfection from contaminated waters. Finally, targeting the intermediate snail host can reduce the amount of worm larvae able to infect humans. The snail population can be controlled with molluscicides, habitat control, biological control, and, theoretically, through gene drives.
 
+Fix this - take a screenshot of the cycle but sized correctly, insert it
+![Schisto Cycle](snail-cycle.png)
 <p align="center"><img src="snail-cycle.png" alt="Schisto Cycle" width="600"/></p>
 
 **Figure 1.** Schistosome life cycle, with intervention points labeled as lightning bolts. Reproduced with permission from Sokolow 2016.
