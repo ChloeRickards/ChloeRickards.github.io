@@ -322,6 +322,7 @@ plt.show()
 
     
 ![png](notebooks_Snails_15_0.png)
+
 **Figure 3.** Genotype proportions in a snail population over time. The homozygous gene drive genotype $GG$ rises to fixation within 40 generations. The high infection levels favor the resistant and less costly $BB$ genotype for a while, but the selfish genetic element of the gene drive eventually causes the $GG$ genotype to dominate the population. Even though the $G$ allele shares the same level of resistance and incurs more fitness cost than the $B$ allele, the non-Mendelian inheritance pattern of the $G$ allele wins out in the end
 
 
@@ -343,6 +344,7 @@ plt.show()
 
     
 ![png](notebooks_Snails_17_0.png)
+
 **Figure 4.** Snail infections over time. Infection drops as the resistant $B$ and $G$ alleles become more common in the population. While these resistant alleles may dominate the population by generation 20, they still only provide a partial protection from infection.
 
 
