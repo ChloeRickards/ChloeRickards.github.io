@@ -1,11 +1,9 @@
 ---
 layout: archive
-title: "Gene Drives and Schistosomiasis"
+title: "Modelling a Gene Drive in a Schistosomiasis System"
 permalink: /genedrive/
 author_profile: true
 ---
-
-# Modelling a Gene Drive in a Schistosomiasis System
 
 ## About Schistosomiasis
 
