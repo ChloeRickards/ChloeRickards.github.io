@@ -1,6 +1,11 @@
-# Modelling a Gene Drive in a Schistosomiasis System
+---
+layout: archive
+title: "Gene Drives and Schistosomiasis"
+permalink: /genedrive/
+author_profile: true
+---
 
-[Return to portfolio](https://chloerickards.github.io)
+# Modelling a Gene Drive in a Schistosomiasis System
 
 ## About Schistosomiasis
 
@@ -317,7 +322,7 @@ plt.show()
 
 
     
-![png](notebooks_Snails_files/notebooks_Snails_15_0.png)
+![png](notebooks_Snails_15_0.png)
     
 
 
@@ -341,7 +346,7 @@ plt.show()
 
 
     
-![png](notebooks_Snails_files/notebooks_Snails_17_0.png)
+![png](notebooks_Snails_17_0.png)
     
 
 
