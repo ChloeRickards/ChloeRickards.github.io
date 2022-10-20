@@ -17,9 +17,10 @@ The parasitic larvae enter the bloodstream when people come into contact with in
 
 Schistosomiasis can be prevented in several ways along the schistosome life cycle, as shown in **Figure 1.** Clean water and sanitation prevents worm larvae from reaching humans and prevents egg-infested excrement from reaching the snails, but is difficult to implement. Adult worms in humans can be treated with the anti-parasite drug praziquantel, but this drug does not prevent reinfection from contaminated waters. Finally, targeting the intermediate snail host can reduce the amount of worm larvae able to infect humans. The snail population can be controlled with molluscicides, habitat control, biological control, and, theoretically, through gene drives.
 
-![pntd.0004794.g001.png](attachment:de587e7d-08c1-48f6-994b-294c006c0ee5.png)
+<p align="center"><img src="snail-cycle.png" alt="Schisto Cycle" width="600"/></p>
 
 **Figure 1.** Schistosome life cycle, with intervention points labeled as lightning bolts. Reproduced with permission from Sokolow 2016.
+
 
 ## Gene Drives
 
@@ -27,7 +28,7 @@ Gene drives propagate a target gene through a population at a rate higher than t
 
 Here, we explore the second scenario within the intermediate snail host of schistosomiasis, as shown in **Figure 2.** These snails exhibit a behavior called *selfing,* a type of asexual reproduction, so one of the goals of this modeling exercise is to see how selfing impacts gene drive outcomes.
 
-![CRISPR diagram.png](attachment:e1d7f72b-75f5-4bec-820e-5dde5eff4636.png)
+<p align="center"><img src="CRISPR_diagram.png" alt="CRISPR Steps" width="600"/></p>
 
 **Figure 2.** CRISPR-Cas9-intermediated gene drive in the intermediate snail host for schistosomiasis. 1) The Cas9 construct is paired with a desired gene and inserted into the snail. 2) Cas9 and the guide RNA pair to its complementary DNA strand, creating a gap where the desired gene can be inserted. 3) The desired gene is now fully inserted into the genome, and enzymes heal the cuts. 4) Snails carrying the Cas9 construct and desired gene mate with wild type snails, such that all (or nearly all) of the offspring carry both the gene drive and desired gene. The desired gene makes its way through the snail population at super-Mendelian rates (i.e. >50% inheritance rates).
 
