@@ -1,10 +1,16 @@
 # main links links
 main:
   - title: "Publications"
-    url: /publications/      
+    url: /publications/
+    
+  - title: "Gene Drives and Schistosomiasis"
+    url: /genedrive/
     
   - title: "Epidemiological Models"
     url: https://chloerickards.shinyapps.io/diseasemodels/
     
   - title: "COVID-19 and Income Equality"
     url: https://chloerickards.shinyapps.io/Covid19/
+    
+  - title: "Miscellaneous"
+    url: /misc/
