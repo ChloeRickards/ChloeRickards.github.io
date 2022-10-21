@@ -8,10 +8,8 @@ redirect_from:
   - /about.html
 ---
 
-# Resume
-
 # Objective
-I am a recently graduated Masters' student with experience in epidemiological statistics and ecological modeling seeking industry applications of biological data, especially in environmental or human health contexts.
+I am a recently graduated Masters' student with experience in epidemiological statistics and ecological modeling. I'm seeking industry or nonprofit applications of biological data, especially in environmental or human health contexts.
 
 # Education
 MS Ecology and Evolutionary Biology (Sept. 2022)
@@ -37,7 +35,9 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 # Awards
 
 National Science Foundation Graduate Research Fellowship Program Winner (2020)
+
 University of California Santa Cruz Regent's Fellowship (2020)
+
 Coha-Gunderson Prize in Speculative Futures (2022)
 
 # Experience
@@ -46,7 +46,7 @@ Coha-Gunderson Prize in Speculative Futures (2022)
 * Estimated Infection Fatality Rate (IFR) of COVID-19 in New York City from serology, case, and death data
 * Applied Fourier transforms, Bayesian inference, and a No U-Turn Sampler (NUTS) to infer undiagnosed infections and test for maximum likelihood among IFR estimates
 * Assessed several IFRs across the globe for patterns in age-specific mortality and determined potential causes for the patterns observed, including wealth inequality and underlying conditions
-* Findings in review, with a preprint available at: https://bit.ly/3abTiVg 
+* Findings in review, with a preprint available at: [https://bit.ly/3abTiVg](https://bit.ly/3abTiVg) 
 
 ### Teaching Assistant, 09/2020 – 08/2022, University of California Santa Cruz, Santa Cruz, CA
 * BIOE 109: Evolution, Fall 2020
@@ -63,12 +63,12 @@ Coha-Gunderson Prize in Speculative Futures (2022)
 
 ### Postbac Student Researcher, 06/20218– 08/2020, Stanford University, Stanford, CA
 * Compared the lifespans and environmental persistence of 150 parasites and pathogens; found that diseases with environmental components are more difficult to control and eradicate
-* Published findings available at: https://bit.ly/3c30owl 
+* Published findings available at: [https://bit.ly/3c30owl](https://bit.ly/3c30owl) 
 
 ### Undergraduate Student Researcher, 06/2015 – 06/2018, Stanford University, Stanford, CA
 * Constructed a stochastic model of the population genetics of the freshwater snail responsible for transmitting schistosomiasis, a Neglected Tropical Disease and a disease of poverty 
 * Projected theoretical changes to local disease burden after introducing a CRISPR/Cas9-mediated gene drive designed to confer resistance to the snail hosts
-* Findings in review, with a preprint available at: https://bit.ly/3Mxg4oa 
+* Findings in review, with a preprint available at: [https://bit.ly/3Mxg4oa](https://bit.ly/3Mxg4oa) 
 
 # Publications
 
