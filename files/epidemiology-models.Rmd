@@ -1,0 +1,344 @@
+S-I Model
+```{r SI, echo = FALSE}
+ui_SI <- fluidPage(theme = shinytheme("journal"),
+                withMathJax(),
+                fluidRow(
+                  column(6, sliderInput(inputId = "rb",
+                              label = withMathJax("Natural birth rate"),
+                              min = 0,
+                              max = 0.03,
+                              value = 0.01,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rd",
+                              label = "Natural death rate",
+                              min = 0,
+                              max = 0.01,
+                              value = 0.005,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "beta",
+                              label = withMathJax("Infection rate, \\(\\beta\\)"),
+                              min = 0,
+                              max = 0.9,
+                              value = 0.75,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "alpha",
+                              label = "Infection-caused death rate, \\(\\alpha\\)",
+                              min = 0,
+                              max = 0.05,
+                              value = 0.01,
+                              ticks = FALSE))
+                ),
+                fluidRow(plotOutput(outputId = "SIPlot")),
+                fluidRow(
+                  column(12, align = "center", div(style = "font-size:150%", tableOutput(outputId = "stats")))
+                )
+)
+
+# Model
+SI <- function(Time, State, Pars) { #function describing model
+  with(as.list(c(State, Pars)), {
+    dS = rb*N - beta*S*I/N - rd*S
+    dI = +beta*S*I/N - alpha*I - rd*I
+    dN = dS + dI
+    return(list(c(dS,dI,dN)))  }) }
+
+yini_SI = c(S = 99,I = 1,N = 100) #initial conditions
+times_SI = seq(0, 100, by = 1) #time steps we want values of the model
+
+getSI <- function(rb, rd, beta, alpha){
+  pars_SI = data.frame(rb, rd, beta, alpha)
+  
+  return(as.data.frame(ode(yini_SI, times_SI, SI, pars_SI)))
+}
+
+
+# Define server logic required to draw a graph
+server_SI <- function(input, output) {
+  
+  out <- reactive({
+    getSI(input$rb, input$rd, input$beta, input$alpha)
+  })
+  
+  output$SIPlot <- renderPlot({
+    ggplot(out(), aes(x = out()[,1]))+
+      geom_line(aes(y=out()[, 2], color = "Susceptible"), size = 1.5)+
+      geom_line(aes(y=out()[, 3], color = "Infected"), size = 1.5)+
+      geom_line(aes(y=out()[, 4], color = "Total (N)"), size = 1.5)+
+      scale_color_manual("", breaks = c("Susceptible","Infected", "Total (N)"),
+                         values = c("skyblue", "firebrick", "black"))+
+      xlab("Time")+
+      ylab("Population")+
+      ggtitle("SI Plot")+
+      theme(plot.title = element_text(size = 25, hjust = 0.5),
+            legend.position = "top", legend.text = element_text(size = 20),
+            axis.text = element_text(size = 20), axis.title = element_text(size = 20))
+  })
+  
+  output$stats <- renderTable({
+    data.frame('Descriptive Statistic' = c("Peak Prevalence",
+                                           "Endemic Prevalence"),
+               Value =  c(max(out()$I) / out()$N[out()$I == max(out()$I)],
+                          out()$I[length(times_SI)] / out()$N[length(times_SI)]),
+               check.names = FALSE)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui_SI, server = server_SI, options = list(height = 750))
+```
+
+
+
+S-I-R Model
+```{r SIR, echo=FALSE}
+# Define UI for application that draws a histogram
+ui_SIR <- fluidPage(theme = shinytheme("journal"),
+                withMathJax(),
+                fluidRow(
+                  column(6, sliderInput(inputId = "rb",
+                              label = withMathJax("Natural birth rate"),
+                              min = 0,
+                              max = 0.03,
+                              value = 0.01,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rd",
+                              label = "Natural death rate",
+                              min = 0,
+                              max = 0.01,
+                              value = 0.005,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "beta",
+                              label = withMathJax("Infection rate, \\(\\beta\\)"),
+                              min = 0,
+                              max = 0.9,
+                              value = 0.75,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "alpha",
+                              label = "Infection-caused death rate, \\(\\alpha\\)",
+                              min = 0,
+                              max = 0.05,
+                              value = 0.01,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "gamma",
+                              label = withMathJax("Recovery rate, \\(\\gamma\\)"),
+                              min = 0,
+                              max = 0.4,
+                              value = 0.2,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rho",
+                              label = "Seroreversion rate, \\(\\rho\\)",
+                              min = 0,
+                              max = 0.003,
+                              value = 0.0015,
+                              ticks = FALSE))
+                ),
+                fluidRow(plotOutput(outputId = "SIRPlot")),
+                fluidRow(
+                  column(12, align = "center", div(style = "font-size:150%", tableOutput(outputId = "stats")))
+                )
+)
+
+# Model
+SIR <- function(Time, State, Pars) { #function describing model
+  with(as.list(c(State, Pars)), {
+    dS= rb*N - beta*S*I/N - rd*S + rho*R
+    dI= beta*S*I/N - alpha*I - gamma*I - rd*I
+    dR= gamma*I - rd*R - rho*R
+    dN= dS + dI + dR
+    return(list(c(dS, dI, dR, dN)))  }) }
+
+yini_SIR = c(S = 99,I = 1,R = 0,N = 100) #initial conditions
+times_SIR = seq(0, 100, by = 1) #time steps we want values of the model
+
+getSIR <- function(rb, rd, beta, alpha, gamma, rho){
+  pars_SIR = data.frame(rb, rd, beta, alpha, gamma, rho)
+  
+  return(as.data.frame(ode(yini_SIR, times_SIR, SIR, pars_SIR)))
+}
+
+
+# Define server logic required to draw a graph
+server_SIR <- function(input, output) {
+  
+  out <- reactive({
+    getSIR(input$rb, input$rd, input$beta, input$alpha, input$gamma, input$rho)
+  })
+  
+  output$SIRPlot <- renderPlot({
+    ggplot(out(), aes(x= out()[,1]))+
+      geom_line(aes(y=out()[, 2], color = "Susceptible"), size = 1.5)+
+      geom_line(aes(y=out()[, 3], color = "Infected"), size = 1.5)+
+      geom_line(aes(y=out()[, 4], color = "Recovered"), size = 1.5)+
+      geom_line(aes(y=out()[, 5], color = "Total (N)"), size = 1.5)+
+      scale_color_manual("", breaks = c("Susceptible","Infected","Recovered", "Total (N)"),
+                         values = c("skyblue", "firebrick", "limegreen", "black"))+
+      xlab("Days")+
+      ylab("Population")+
+      ggtitle("SIR Plot")+
+      theme(plot.title = element_text(size = 25, hjust = 0.5),
+            legend.position = "top", legend.text = element_text(size = 20),
+            axis.text = element_text(size = 20), axis.title = element_text(size = 20))
+  })
+  
+  output$stats <- renderTable({
+    data.frame('Descriptive Statistic' = c("Peak Prevalence",
+                                           "Endemic Prevalence",
+                                           "R0",
+                                           "Herd Immunity Threshold"),
+               Value =  c(max(out()$I / out()$N),
+                          out()$I[length(times_SIR)] / out()$N[length(times_SIR)],
+                          if ((input$alpha + input$gamma + input$rd) == 0) {
+                            Inf
+                          } else {
+                            input$beta / (input$alpha+input$gamma + input$rd)},
+                          if ((input$alpha + input$gamma)==0){
+                            NA
+                          } else if (input$beta / (input$alpha + input$gamma + input$rd) > 1){
+                            1 - (1 / (input$beta / (input$alpha+input$gamma + input$rd)))
+                          } else {
+                            NA
+                          }), check.names = FALSE)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui_SIR, server = server_SIR, options = list(height = 900))
+```
+ 
+ 
+S-E-I-R Model:
+```{r SEIR, echo=FALSE}
+# Define UI for application that draws a histogram
+ui_SEIR <- fluidPage(theme = shinytheme("journal"),
+                withMathJax(),
+                fluidRow(
+                  column(6, sliderInput(inputId = "rb",
+                              label = withMathJax("Natural birth rate"),
+                              min = 0,
+                              max = 0.03,
+                              value = 0.01,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "rd",
+                              label = "Natural death rate",
+                              min = 0,
+                              max = 0.01,
+                              value = 0.005,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(6, sliderInput(inputId = "beta",
+                              label = withMathJax("Infection rate, \\(\\beta\\)"),
+                              min = 0,
+                              max = 0.9,
+                              value = 0.75,
+                              ticks = FALSE)),
+                  column(6, sliderInput(inputId = "alpha",
+                              label = "Infection-caused death rate, \\(\\alpha\\)",
+                              min = 0,
+                              max = 0.05,
+                              value = 0.01,
+                              ticks = FALSE))
+                ),
+                fluidRow(
+                  column(4, sliderInput(inputId = "gamma",
+                              label = withMathJax("Recovery rate, \\(\\gamma\\)"),
+                              min = 0,
+                              max = 0.4,
+                              value = 0.2,
+                              ticks = FALSE)),
+                  column(4, sliderInput(inputId = "rho",
+                              label = "Seroreversion rate, \\(\\rho\\)",
+                              min = 0,
+                              max = 0.003,
+                              value = 0.0015,
+                              ticks = FALSE)),
+                  column(4, sliderInput(inputId = "lambda",
+                              label = "Latency rate, \\(\\lambda\\)",
+                              min = 0,
+                              max = 0.4,
+                              value = 0.2,
+                              ticks = FALSE))
+                ),
+                fluidRow(plotOutput(outputId = "SEIRPlot")),
+                fluidRow(
+                  column(12, align = "center", div(style = "font-size:150%", tableOutput(outputId = "stats")))
+                )
+)
+
+# Model
+SEIR <- function(Time, State, Pars) { #function describing model
+  with(as.list(c(State, Pars)), {
+    dS = rb*N - beta*S*I/N - rd*S + rho*R
+    dE = beta*S*I/N - lambda*E - rd*E
+    dI = lambda*E - alpha*I - gamma*I - rd*I
+    dR = gamma*I - rd*R - rho*R
+    dN = dS + dE + dI + dR
+    return(list(c(dS, dE, dI, dR, dN)))  }) }
+
+yini_SEIR  = c(S = 99, E = 1, I = 0, R = 0, N = 100) #initial conditions
+times_SEIR = seq(0, 100, by = 1) #time steps we want values of the model
+
+getSEIR <- function(rb, rd, beta, alpha, gamma, rho, lambda){
+  pars_SEIR = data.frame(rb, rd, beta, alpha, gamma, rho, lambda)
+  
+  return(as.data.frame(ode(yini_SEIR, times_SEIR, SEIR, pars_SEIR)))
+}
+
+
+# Define server logic required to draw a graph
+server_SEIR <- function(input, output) {
+  
+  out <- reactive({
+    getSEIR(input$rb, input$rd, input$beta, input$alpha, input$gamma, input$rho, input$lambda)
+  })
+  
+  output$SEIRPlot <- renderPlot({
+    ggplot(out(), aes(x= out()[, 1]))+
+      geom_line(aes(y=out()[, 2], color = "Susceptible"), size = 1.5)+
+      geom_line(aes(y=out()[, 3], color = "Exposed"), size = 1.5)+
+      geom_line(aes(y=out()[, 4], color = "Infected"), size = 1.5)+
+      geom_line(aes(y=out()[, 5], color = "Recovered"), size = 1.5)+
+      geom_line(aes(y=out()[, 6], color = "Total (N)"), size = 1.5)+
+      scale_color_manual("", breaks = c("Susceptible", "Exposed", "Infected", "Recovered", "Total (N)"),
+                         values = c("skyblue", "darkorange", "firebrick", "limegreen", "black"))+
+      xlab("Days")+
+      ylab("Population")+
+      ggtitle("SEIR Plot")+
+      theme(plot.title = element_text(size = 25, hjust = 0.5),
+            legend.position = "top", legend.text = element_text(size = 20),
+            axis.text = element_text(size = 20), axis.title = element_text(size = 20))
+  })
+  
+  output$stats <- renderTable({
+    data.frame('Descriptive Statistic' = c("Peak Prevalence",
+                                           "Endemic Prevalence",
+                                           "R0",
+                                           "Herd Immunity Threshold"),
+               Value = c(max(out()$I/out()$N),
+               out()$I[length(times_SEIR)]/out()$N[length(times_SEIR)],
+               if (input$alpha + input$gamma + input$rd == 0){
+                 Inf
+               } else if (input$lambda + input$rd == 0){
+                 Inf
+               } else{
+                 input$lambda*input$beta/((input$lambda+input$rd)*(input$alpha+input$gamma+input$rd))
+               },
+               if (input$lambda*input$beta/((input$lambda+input$rd)*(input$alpha+input$gamma+input$rd)) >1){
+                 1 - 1/(input$lambda*input$beta/((input$lambda+input$rd)*(input$alpha+input$gamma+input$rd)))
+               } else{
+                 NA
+               }),
+               check.names = FALSE)
+  })
+}
+
+# Run the application 
+shinyApp(ui = ui_SEIR, server = server_SEIR, options = list(height = 900))
+```
+ 
