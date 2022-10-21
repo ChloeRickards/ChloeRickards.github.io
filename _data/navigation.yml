@@ -9,8 +9,11 @@ main:
   - title: "Epidemiological Models"
     url: https://chloerickards.shinyapps.io/diseasemodels/
     
-  - title: "COVID-19 and Income Equality"
+  - title: "COVID-19 and Income Inequality"
     url: https://chloerickards.shinyapps.io/Covid19/
     
   - title: "Miscellaneous"
     url: /misc/
+    
+  - title: "Resume"
+    url: /ChloeRickards_Resume_Oct2022.pdf
