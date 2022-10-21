@@ -22,6 +22,8 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 
 # Portfolio Projects
 
+[Modelling a Gene Drive in the Schistosomiasis System](https://chloerickards.github.io/genedrive/)
+
 [Comparing Age-Specific Patterns of COVID-19 Mortality](https://chloerickards.shinyapps.io/Covid19/)
 
 [Compartmental Epidemiological Models](https://chloerickards.shinyapps.io/diseasemodels/)
