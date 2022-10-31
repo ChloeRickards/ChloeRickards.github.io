@@ -11,6 +11,8 @@ As genetic engineering becomes easier and cheaper, its potential for improving g
 
 **Tools used in this demo**: Python, pandas, NumPy, matplotlib, population genetics, Markov process 
 
+For more information about this system, see [Grewelle et al. 2022.](https://journals.plos.org/plosntds/article?id=10.1371/journal.pntd.0010894)
+
 ## About Schistosomiasis
 
 Schistosomiasis (SHI-stow-so-MY-ah-sis) is a parasitic worm disease that affects over 200 million people a year. Schistosomiasis is most common in areas in sub-Saharan Africa without access to clean water or sanitation.  Schistosomiasis is characterized by high morbidity and relatively low mortality , meaning that people with schistosomiasis becomne chronically ill but don't usually die. Schistosomiasis is considered a Neglected Tropical Disease and a disease of poverty.
