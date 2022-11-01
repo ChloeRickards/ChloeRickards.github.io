@@ -20,11 +20,21 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 
 # Portfolio Projects
 
-[Modelling a Gene Drive in the Schistosomiasis System](https://chloerickards.github.io/genedrive/)
+[Modeling a Gene Drive in the Schistosomiasis System](https://chloerickards.github.io/genedrive/)
 
-[Comparing Age-Specific Patterns of COVID-19 Mortality](https://chloerickards.shinyapps.io/Covid19/)
+Tools Used: Python, Jupyter Notebook, Mathematical Modeling
+
+&nbsp;
+
+[COVID-19 Infection Fatality Rates and Income Inequality](https://chloerickards.shinyapps.io/Covid19/)
+
+Tools Used: R, Shiny, Regression Analysis, Data Analysis
+
+&nbsp;
 
 [Compartmental Epidemiological Models](https://chloerickards.shinyapps.io/diseasemodels/)
+
+Tools Used: R, Shiny, Mathematical Modeling
 
 # Skills
 
