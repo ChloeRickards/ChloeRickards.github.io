@@ -6,11 +6,11 @@ main:
   - title: "Gene Drives and Schistosomiasis"
     url: /genedrive/
     
-  - title: "Epidemiological Models"
-    url: https://chloerickards.shinyapps.io/diseasemodels/
-    
   - title: "COVID-19 and Income Inequality"
     url: https://chloerickards.shinyapps.io/Covid19/
+    
+  - title: "Epidemiological Models"
+    url: https://chloerickards.shinyapps.io/diseasemodels/
     
   - title: "Miscellaneous"
     url: /misc/
