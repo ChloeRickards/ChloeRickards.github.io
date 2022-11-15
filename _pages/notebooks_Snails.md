@@ -9,7 +9,7 @@ author_profile: true
 
 As genetic engineering becomes easier and cheaper, its potential for improving global health continues to grow. This theoretical model examines the potential application of a CRISPR-Cas9 gene drive to a population of *Biomphalaria glabrata* snails, the intermediate host for the neglected tropical disease schistosomiasis. This system is of special interest because these snails reproduce both sexually and asexually. This model shows the outcome of a gene drive in a scenario where asexual reproduction has to be considered.
 
-**Tools used in this demo**: Python, pandas, NumPy, matplotlib, population genetics, Markov process 
+**Tools used in this demo**: Python, pandas, NumPy, matplotlib, sensitivity analysis, population genetics, Markov process 
 
 For more information about this system, see [Grewelle et al. 2022.](https://journals.plos.org/plosntds/article?id=10.1371/journal.pntd.0010894)
 
