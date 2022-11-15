@@ -22,7 +22,7 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 
 [Modeling a Gene Drive in the Schistosomiasis System](https://chloerickards.github.io/genedrive/)
 
-* Tools Used: Python, Jupyter Notebook, Mathematical Modeling
+* Tools Used: Python, Jupyter Notebook, Mathematical Modeling, Sensitivity Analysis
 
 [COVID-19 Infection Fatality Rates and Income Inequality](https://chloerickards.shinyapps.io/Covid19/)
 
