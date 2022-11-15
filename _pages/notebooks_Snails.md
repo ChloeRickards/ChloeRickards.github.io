@@ -13,6 +13,8 @@ As genetic engineering becomes easier and cheaper, its potential for improving g
 
 For more information about this system, see [Grewelle et al. 2022.](https://journals.plos.org/plosntds/article?id=10.1371/journal.pntd.0010894)
 
+Sensitivity analysis code is [avaliable here](https://github.com/ChloeRickards/chloerickards.github.io/blob/master/files/sensitivity-analysis-snails.py)
+
 # Table of contents
 1. [Introduction](#intro)
     1. [About Schistosomiasis](#about-schisto)
@@ -417,7 +419,7 @@ param_values = saltelli.sample(param_ranges, 1024)
 # here, our output is the number of infected snails at the end of the simulation
 Y = np.zeros([param_values.shape[0]])
 
-# This is where the model goes, but much of the code is redundant. To see the full code, visit github link
+# This is where the model goes, but much of the code is redundant. To see the full code, see the link above the table of contents
 
 # Evaluate model for each array of parameter values
 for i, X in enumerate(param_values):
