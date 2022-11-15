@@ -13,13 +13,30 @@ As genetic engineering becomes easier and cheaper, its potential for improving g
 
 For more information about this system, see [Grewelle et al. 2022.](https://journals.plos.org/plosntds/article?id=10.1371/journal.pntd.0010894)
 
-## About Schistosomiasis
+# Table of contents
+1. [Introduction](#intro)
+    1. [About Schistosomiasis](#about-schisto)
+    2. [Interventions](#interventions)
+    3. [Gene Drives](#gene-drives)
+2. [Methods](#methods)
+    1. [Setup and Model Assumptions](#setup)
+    2. [The Transition Matrix](#tm)
+    3. [Simulation Code](#simulation)
+3. [Results](#results)
+    1. [Plotting Out the Genotypes](#plot)
+4. [Application](#application)
+    1. [Sensitivity Analysis](#sa)
+
+
+## Introduction <a name="intro"></a>
+
+### About Schistosomiasis <a name="about-schisto"></a>
 
 Schistosomiasis (SHI-stow-so-MY-ah-sis) is a parasitic worm disease that affects over 200 million people a year. Schistosomiasis is most common in areas in sub-Saharan Africa without access to clean water or sanitation.  Schistosomiasis is characterized by high morbidity and relatively low mortality , meaning that people with schistosomiasis becomne chronically ill but don't usually die. Schistosomiasis is considered a Neglected Tropical Disease and a disease of poverty.
 
 The parasitic larvae enter the bloodstream when people come into contact with infested water. Once in the body, the larvae mature into worms, reside in either the urinary or gastrointestinal system, start to lay spiky eggs that are painfully excreted out of the body. When these eggs enter water, they hatch and infect freshwater snails. Inside the snails, the larvae develop until they are ready to emerge and infect humans, thus continuing the worm's life cycle.
 
-## Interventions
+### Interventions <a name="interventions"></a>
 
 Schistosomiasis can be prevented in several ways along the schistosome life cycle, as shown in **Figure 1.** Clean water and sanitation prevents worm larvae from reaching humans and prevents egg-infested excrement from reaching the snails, but is difficult to implement. Adult worms in humans can be treated with the anti-parasite drug praziquantel, but this drug does not prevent reinfection from contaminated waters. Finally, targeting the intermediate snail host can reduce the amount of worm larvae able to infect humans. The snail population can be controlled with molluscicides, habitat control, biological control, and, theoretically, through gene drives.
 
@@ -28,7 +45,7 @@ Schistosomiasis can be prevented in several ways along the schistosome life cycl
 **Figure 1.** Schistosome life cycle, with intervention points labeled as lightning bolts. Reproduced with permission from Sokolow 2016.
 
 
-## Gene Drives
+### Gene Drives <a name="gene-drives"></a>
 
 Gene drives propagate a target gene through a population at a rate higher than the expected level of Mendelian inheritance. For example, let's say that Parent 1 carries Gene A and Parent 2 carries Gene G. Normally, the chance of inheriting Gene G from a parent is 50%, but if a gene drive is paired with Gene G, the chance becomes much higher - often close to 100%. With the advent of CRISPR/Cas9 gene editing technology, many different gene drive constructs are being explored within the realm of infectious disease control. Some gene drives focus on spreading a lethal gene through, for example, a mosquito population - acting as a sort of genetic pesticide and locally crashing a population. Other gene drives focus on spreading disease resistance through a population, making a disease less transmissible to humans, but otherwise leaving the population mostly intact.
 
@@ -44,7 +61,9 @@ $$AA \times GG \to 100\% AG$$
 
 But with the gene drive, the $A$ allele in the $AG$ genotype becomes overwritten, so all, or nearly all offspring have genotype $GG$
 
-## Setup and Model Assumptions
+## Methods <a name="methods"></a>
+
+### Setup and Model Assumptions <a name="setup"></a>
 
 To model this situation, we start by establishing some constants. These are the building blocks for this scenario. Where applicable, literature sources for the parameters are listed. These characteristics are specific to *Biomphalaria glabrata.* In this scenario, we have three alleles:
 
@@ -203,7 +222,7 @@ gdf
 
 
 
-## The Transition Matrix
+### The Transition Matrix <a name="tm"></a>
 
 The goal of this model is to observe how the population genetics of a snail population change over time (measured in generations of snails). To do this, we set up a transition matrix (Grewelle et al. 2022), which tracks how genotypes change from one generation to the next. The transition matrix is the probability that the genotypes in the rows will reproduce and make the genotypes in the columns in the subsequent generation. The following function constructs the matrix by examining all combinations of genotype crossings.
 
@@ -268,6 +287,7 @@ def get_transition_matrix(genotypes, previous_gen_proportions):
     return tm
 ```
 
+### Simulation Code <a name="simulation"></a>
 
 ```python
 # Starting with index of 1 because we have generation 0 already defined
@@ -306,7 +326,9 @@ for i in range(0, N_GENS):
 
 ```
 
-## Plotting Out the Genotypes
+## Results <a name="results"></a>
+
+### Plotting Out the Genotypes <a name="plot"></a>
 
 Now, we can observe how the genotypes change over several generations. If the gene drive works well, then the proportion of snails homozygous for the gene drive (genotype $GG$) should rise fairly quickly.
 
@@ -356,9 +378,69 @@ plt.show()
 **Figure 4.** Snail infections over time. Infection drops as the resistant $B$ and $G$ alleles become more common in the population. While these resistant alleles may dominate the population by generation 20, they still only provide a partial protection from infection.
 
 
-## Conclusion
+This exercise demonstrated what would happen to a theoretical population of freshwater snails after a gene drive is introduced to the population. How, then, can we use the information given by this model? One thing we can do is to assess which parameters contribute the most to the success of the gene drive, as measured by the percentage of $GG$ genotype by generation 100.
 
-This exercise demonstrated a theoretical system where a gene drive is applied to a population of freshwater snails that serve as the intermediate host for schistosomiasis. Freshwater snails reproduce both sexually and asexually, so modeling a gene drive in this system is of special interest. For more information about this system and this project, see Grewelle 2021.
+### Sensitivity Analysis <a name="sa"></a>
+
+To see which parameters have the highest impact on the outcome of the gene drive, we perform a sensitivity analysis. The most sensitive parameters may determine the success or failure of the gene drive. This can give us input about how and where to apply a gene drive. For example, if the most senstive parameters are dependent on external conditions (such as $\beta$, the infection rate; or $r$, the growth rate), then the success of the gene drive may lie in local environmental conditions. If the most sensitive parameters are dependent on genetic conditions (such as $g$, the gene drive efficiency; or $\xi$, the level of disease resistance), then the success of the gene drive may lie in the design of the gene drive itself.
+
+```python
+# This code relies on the package SALib
+from SALib.sample import saltelli
+from SALib.analyze import sobol
+
+# This defines the parameters we are testing and the range of values we will be testing them in
+param_ranges = {
+    'num_vars': 8,
+    'names': ['R',
+              'MU',
+              'G',
+              'SIG',
+              'INBR',
+              'BETA',
+              'XI',
+              'K'],
+    'bounds': [[20, 80], # per capita fertility rate [default = 54]
+               [0.01, 0.4], # natural death rate [default = 0.2]
+               [0.5, 0.99], # gene drive efficiency [default = 0.95] 0.5 is regular Mendelian inheritance rate
+               [0.01, 0.3], # selfing rate [default = 0.15]
+               [0.5, 0.99], # inbreeding fitness cost [default = 0.85]
+               [0.01, 2], # per capita infection rate [default = 0.5]
+               [0.5, 0.99], # level of resistance conferred by the B and G alleles [default = 0.8]
+               [50, 150]] # carrying capacity [default = 100]
+}
+
+# Generate parameter samples
+param_values = saltelli.sample(param_ranges, 1024)
+
+# placeholder for the output
+# here, our output is the number of infected snails at the end of the simulation
+Y = np.zeros([param_values.shape[0]])
+
+# This is where the model goes, but much of the code is redundant. To see the full code, visit github link
+
+# Evaluate model for each array of parameter values
+for i, X in enumerate(param_values):
+    Y[i] = evaluate_model(X)
+
+# Perform the sensitivity analysis
+Si = sobol.analyze(param_ranges, Y)
+
+# plots a bar graph of the total sensitivity index
+y_pos = np.arange(len(param_ranges['names']))
+hbars = ax.barh(y_pos, Si['ST'], align = 'center')
+ax.set_yticks(y_pos)
+ax.set_yticklabels(param_ranges['names'])
+ax.invert_yaxis()
+ax.bar_label(hbars, fmt='%.2f')
+ax.set_ylabel('Parameters')
+ax.set_xlabel('Total Sensitivity Index')
+plt.show()
+```
+
+![SA-fig.png](SA-fig.png)
+
+**Figure 5.** Sobol sensitivity analysis, measuring the sensitivity of all of the parameters to the number of infected snails at t=99. The parameter with the highest sensitivity index is beta, or $\beta$, the force of infection on the snails. This suggests that the higher the infection level in the environment, the more successfully a resistance-inducing gene drive will perform.
 
 ### References
 
@@ -367,6 +449,8 @@ Costa MJ, Grault CE, Confalonieri UE. Comparative study of the fecundity and fer
 Grewelle, R.E., Perez-Saez J., Tycko J., Namigai E.K.O., Rickards C.G., De Leo G.A. (2021). Modeling the efficacy of CRISPR gene drive for schistosomiasis control (pre-print). *bioRxiv* 2021.10.29.466423 https://doi.org/10.1101/2021.10.29.466423
 
 Hammond A, Galizi R, Kyrou K, Simoni A, Siniscalchi C, Katsanos D, Gribble M, Baker D, Marois E, Russell S, Burt A, Windbichler N, Crisanti A, Nolan T. A CRISPR-Cas9 gene drive system targeting female reproduction in the malaria mosquito vector Anopheles gambiae. *Nat Biotechnol.* 2016 Jan;34(1):78-83. doi: 10.1038/nbt.3439. Epub 2015 Dec 7. PMID: 26641531; PMCID: PMC4913862.
+
+Herman, J. and Usher, W. (2017) SALib: An open-source Python library for sensitivity analysis. Journal of Open Source Software, 2(9). doi:10.21105/joss.00097
 
 Jarne, P., & Charlesworth, D. (1993). The Evolution of the Selfing Rate in Functionally Hermaphrodite Plants and Animals. *Annual Review of Ecology and Systematics,* 24, 441–466. http://www.jstor.org/stable/2097186
 
