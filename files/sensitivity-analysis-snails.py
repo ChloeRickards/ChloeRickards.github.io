@@ -50,7 +50,6 @@ def evaluate_model(pars):
     N_ALLELES = len(alleles)
     allele_growth_rates = [pars[0], pars[0]*0.9, pars[0]*0.8] # B's growth rate is 90% of A. G's is 80% of A
     allele_resistances = [0, pars[6], pars[6]] # B and G assumed to convey the same resistance
-    # add allele resistances
     genotypes = []
     genotype_growth_rates = []
     genotype_resistances = []
@@ -82,13 +81,11 @@ def evaluate_model(pars):
     for x in range(0, N_GENOTYPES):
         infected_snails[0][x] = (1 - pars[1]) * pars[5] * (1 - genotype_resistances[x]) * initial_pop[x]
 
-    # Chunk 2
     # View characteristics of the genotypes we are working with
     gdf = pd.DataFrame({"Growth Rate": genotype_growth_rates,
                        "Resistance": genotype_resistances})
     gdf.index = genotypes
 
-    # Chunk 3
     def get_transition_matrix(genotypes, previous_gen_proportions):
         # Framing the proportions in a dataframe we can call by genotype
         proportions = pd.DataFrame(previous_gen_proportions, index = genotypes)
@@ -104,7 +101,8 @@ def evaluate_model(pars):
         
         # Generating the outcrossing transition matrix
         # genotype1 x genotype 2 --> genotype_nextgen
-        # transition matrix rows: genotype1, column: genotype_nextgen
+        # Rows: genotype1
+        # Columns: genotype_nextgen
         for genotype1 in genotypes:
             for genotype2 in genotypes:
                 for allele1 in genotype1:
@@ -133,8 +131,9 @@ def evaluate_model(pars):
         self_tm = pd.DataFrame(self_tm, index = genotypes, columns = genotypes)
 
         # Generating the selfing transition matrix
-        # genotype1 x genotype 1 --> genotype_nextgen
-        # transition matrix rows: genotype1, column: genotype_nextgen
+        # genotype_self x genotype_self --> genotype_nextgen
+        # Rows: genotype_self
+        # Columns: genotype_nextgen
         for genotype_self in genotypes:
             for allele1 in genotype_self:
                 for allele2 in genotype_self:
@@ -196,8 +195,6 @@ def evaluate_model(pars):
             new_pop = np.zeros(N_GENOTYPES)
         else:
             new_pop = reproducing_population + genotype_growth/growth_total*log_growth_coeff
-
-        # probably some if statement to set new_pop = 0 if negative
         
         population_genetics[:,i] = new_pop
 
@@ -206,15 +203,13 @@ def evaluate_model(pars):
 
 
 for i, X in enumerate(param_values):
-    print('bungee gum')
     Y[i] = evaluate_model(X)
 
 Si = sobol.analyze(param_ranges, Y)
 
 y_pos = np.arange(len(param_ranges['names']))
 
-# plots a bar graph with 
-#ax.barh(y_pos, Si['ST'], xerr = Si['ST_conf'], align = 'center')
+# plots a bar graph 
 hbars = ax.barh(y_pos, Si['ST'], align = 'center')
 ax.set_yticks(y_pos)
 ax.set_yticklabels(param_ranges['names'])
