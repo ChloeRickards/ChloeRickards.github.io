@@ -13,13 +13,13 @@ I am a recently graduated Masters' student with experience in epidemiological st
 
 # Education
 
-**University of California - Santa Cruz**
-MS, Ecology and Evolutionary Biology (Sept. 2022)
-[Kilpatrick Lab](https://kilpatrick.eeb.ucsc.edu/)
+**University of California - Santa Cruz** 
 
-**Stanford University**
-BS, Bioengineering with Honors (June 2018)
-[De Leo Lab](https://deleolab.stanford.edu/)
+M.S. Ecology and Evolutionary Biology (Sept. 2022), [Kilpatrick Lab](https://kilpatrick.eeb.ucsc.edu/)
+
+**Stanford University** 
+
+B.S. Bioengineering with Honors (June 2018), [De Leo Lab](https://deleolab.stanford.edu/)
 
 # Portfolio Projects
 
