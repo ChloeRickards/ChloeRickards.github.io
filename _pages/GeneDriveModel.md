@@ -34,6 +34,16 @@ To model this situation, we start with characterizing our **alleles**. Each alle
 
 Alleles mix and match during reproduction to form genotypes, and we are interested in tracking the change of genotype proportions over time.The goal of this model is to observe how the population genetics of a snail population change over time (measured in generations of snails). To do this, we set up a transition matrix (Grewelle et al. 2022), which tracks how genotypes change from one generation to the next. The following algorithm constructs the matrix by examining all combinations of genotype crossings - both in sexual reproduction (or outcrossing) and asexual reproduction (or selfing).
 
+    //indent test
+    # Framing the proportions in a dataframe we can call by genotype
+    proportions = pd.DataFrame(previous_gen_proportions, index = genotypes)
+    
+    # Outcrossing transition matrix setup, dependent on the number of genotypes in our system (N_GENOTYPES)
+    out_tm = np.zeros((N_GENOTYPES, N_GENOTYPES))
+    out_tm = pd.DataFrame(out_tm, index = genotypes, columns = genotypes)
+    
+    # Generating the outcrossing transition matrix
+
 ```python
 def get_transition_matrix(genotypes, previous_gen_proportions):
     """Get the transition matrix - or, the probability that one 
