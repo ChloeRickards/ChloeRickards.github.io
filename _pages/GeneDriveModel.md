@@ -3,7 +3,6 @@ layout: archive
 title: "Modeling a Gene Drive in the Intermediate Host for Schistosomiasis, a Neglected Tropical Disease"
 permalink: /genedrive/
 author_profile: true
-code-block-font-size: \normalsize
 ---
 
 ## Summary
