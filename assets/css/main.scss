@@ -39,3 +39,11 @@
 @import "vendor/font-awesome/brands";
 @import "vendor/magnific-popup/magnific-popup";
 @import "print";
+
+.highlight {
+  margin: 0;
+  padding: 0.5em;
+  font-family: $monospace;
+  font-size: 1em;
+  line-height: 1.8;
+}
