@@ -1,11 +1,9 @@
 ---
 layout: archive
-title: "Modelling a Gene Drive in a Schistosomiasis System"
+title: "Modeling a Gene Drive in the Intermediate Host for Schistosomiasis, a Neglected Tropical Disease"
 permalink: /genedrive/
 author_profile: true
 ---
-
-# Modeling a Gene Drive in the Intermediate Host for Schistosomiasis, a Neglected Tropical Disease
 
 ## Summary
 
@@ -73,10 +71,15 @@ def get_transition_matrix(genotypes, previous_gen_proportions):
                     # - Most form a gene drive genotype 'GG' at a rate GAMMA
                     # - Some stay in the nextgen genotype at a rate (1-GAMMA)
                     if bool('G' in allele1) != bool('G' in allele2):
-                        out_tm["GG"][genotype1] = out_tm["GG"][genotype1] + GAMMA * (1 / 4) * rate * proportions.loc[genotype1][0] * proportions.loc[genotype2][0]
-                        out_tm[genotype_nextgen][genotype1] = out_tm[genotype_nextgen][genotype1] + (1 - GAMMA) * (1 / 4) * rate * proportions.loc[genotype1][0] * proportions.loc[genotype2][0]
+                        out_tm["GG"][genotype1] = out_tm["GG"][genotype1] + GAMMA * (1 / 4) * rate * 
+                                                    proportions.loc[genotype1][0] * proportions.loc[genotype2][0]
+                        out_tm[genotype_nextgen][genotype1] = out_tm[genotype_nextgen][genotype1] + (1 - GAMMA) *
+                                                                (1 / 4) * rate * proportions.loc[genotype1][0] * 
+                                                                proportions.loc[genotype2][0]
                     else:
-                        out_tm[genotype_nextgen][genotype1] = out_tm[genotype_nextgen][genotype1] + (1 / 4) * rate * proportions.loc[genotype1][0] * proportions.loc[genotype2][0]
+                        out_tm[genotype_nextgen][genotype1] = out_tm[genotype_nextgen][genotype1] + 
+                                                                (1 / 4) * rate * proportions.loc[genotype1][0] * 
+                                                                proportions.loc[genotype2][0]
     
     # Selfing (asexual reproduction) transition matrix setup
     self_tm = np.zeros((N_GENOTYPES, N_GENOTYPES))
@@ -97,10 +100,14 @@ def get_transition_matrix(genotypes, previous_gen_proportions):
             
                 # Gene Drive Condition applies
                 if bool ('G' in allele1) != bool('G' in allele2):
-                    self_tm['GG'][genotype_self] = self_tm['GG'][genotype_self] + GAMMA * (1 / 4) * rate * proportions.loc[genotype_self][0]
-                    self_tm[genotype_nextgen][genotype_self] = self_tm[genotype_nextgen][genotype_self] + (1 - GAMMA) * (1 / 4) * rate * proportions.loc[genotype_self][0]
+                    self_tm['GG'][genotype_self] = self_tm['GG'][genotype_self] + GAMMA * (1 / 4) * 
+                                                    rate * proportions.loc[genotype_self][0]
+                    self_tm[genotype_nextgen][genotype_self] = self_tm[genotype_nextgen][genotype_self] + 
+                                                                (1 - GAMMA) * (1 / 4) * rate * 
+                                                                proportions.loc[genotype_self][0]
                 else:
-                    self_tm[genotype_nextgen][genotype_self] = self_tm[genotype_nextgen][genotype_self] + (1 / 4) * rate * proportions.loc[genotype_self][0]
+                    self_tm[genotype_nextgen][genotype_self] = self_tm[genotype_nextgen][genotype_self] + 
+                                                                (1 / 4) * rate * proportions.loc[genotype_self][0]
     
     # Combine the two transition matrices, applying the selfing rate (SIG) and the inbreeding cost (INBR)
     tm = (1 - SIG) * out_tm + SIG * INBR * self_tm
