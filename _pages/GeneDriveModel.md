@@ -123,7 +123,7 @@ We can use this transition matrix if we are given an initial population and some
 
 ![png](notebooks_Snails_15_0.png)
 
-**Figure 3.** Genotype proportions in a snail population over time. The homozygous gene drive genotype $GG$ rises to fixation within 40 generations. The high infection levels favor the resistant and less costly $BB$ genotype for a while, but the selfish genetic element of the gene drive eventually causes the $GG$ genotype to dominate the population. Even though the $G$ allele shares the same level of resistance and incurs more fitness cost than the $B$ allele, the non-Mendelian inheritance pattern of the $G$ allele wins out in the end
+**Figure 1.** Genotype proportions in a snail population over time. The homozygous gene drive genotype $GG$ rises to fixation within 40 generations. The high infection levels favor the resistant and less costly $BB$ genotype for a while, but the selfish genetic element of the gene drive eventually causes the $GG$ genotype to dominate the population. Even though the $G$ allele shares the same level of resistance and incurs more fitness cost than the $B$ allele, the non-Mendelian inheritance pattern of the $G$ allele wins out in the end
 
 ## The Next Steps <a name="nextsteps"></a>
 
@@ -131,4 +131,4 @@ This exercise demonstrated what would happen to a theoretical population of fres
 
 ![SA-fig.png](SA-fig.png)
 
-**Figure 5.** Sobol sensitivity analysis, measuring the sensitivity of all of the parameters to the number of infected snails at t=99. The parameter with the highest sensitivity index is beta, or $\beta$, the force of infection on the snails. This suggests that the higher the infection level in the environment, the more successfully a resistance-inducing gene drive will perform!
+**Figure 2.** Sobol sensitivity analysis, measuring the sensitivity of all of the parameters to the number of infected snails at t=99. The parameter with the highest sensitivity index is beta, or $\beta$, the force of infection on the snails. This suggests that the higher the infection level in the environment, the more successfully a resistance-inducing gene drive will perform!
