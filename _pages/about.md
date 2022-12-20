@@ -9,14 +9,17 @@ redirect_from:
 ---
 
 # Objective
-I am a recently graduated Masters' student with experience in epidemiological statistics and ecological modeling. I'm seeking industry or nonprofit applications of biological data, especially in environmental or human health contexts.
+I am a recently graduated Masters' student with experience in epidemiological statistics and ecological modeling. I'm seeking industry or nonprofit applications of data science and machine learning.
 
 # Education
-MS Ecology and Evolutionary Biology (Sept. 2022)
-University of California - Santa Cruz, [Kilpatrick Lab](https://kilpatrick.eeb.ucsc.edu/)
 
+**University of California - Santa Cruz**
+MS, Ecology and Evolutionary Biology (Sept. 2022)
+[Kilpatrick Lab](https://kilpatrick.eeb.ucsc.edu/)
+
+**Stanford University**
 BS, Bioengineering with Honors (June 2018)
-Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
+[De Leo Lab](https://deleolab.stanford.edu/)
 
 # Portfolio Projects
 
@@ -36,23 +39,24 @@ Stanford University, [De Leo Lab](https://deleolab.stanford.edu/)
 
 **Programming Languages:** Python (NumPy, pandas, Matplotlib, Jupyter), R (tidyverse, ggplot, Shiny), SQL, Stan, MATLAB, Java, Markdown, LaTeX
 
-**Additional Skills:** Statistical analysis, Bayesian inference, Markov chain Monte Carlo, Mathematical modeling, Data visualization, Science communication, DNA sequencing, Adobe Suite, Microsoft Office
-
-# Awards
-
-National Science Foundation Graduate Research Fellowship Program Winner (2020)
-
-University of California Santa Cruz Regent's Fellowship (2020)
-
-Coha-Gunderson Prize in Speculative Futures (2022)
+**Additional Skills:** Statistical analysis, Bayesian inference, Markov chain Monte Carlo, Mathematical modeling, Data visualization, Science communication
 
 # Experience
 
 ### Graduate Student Researcher, 09/2020 – 09/2022, University of California Santa Cruz, Santa Cruz, CA
-* Estimated Infection Fatality Rate (IFR) of COVID-19 in New York City from serology, case, and death data
-* Applied mathematical modeling and Bayesian statistics in R to infer undiagnosed infections from cases and deaths and then tested for maximum likelihood among IFR estimates
-* Assessed several IFRs across the globe for patterns in age-specific mortality and determined potential causes for the patterns observed, including wealth inequality and underlying conditions
-* Findings in review, with a preprint available at: [https://bit.ly/3abTiVg](https://bit.ly/3abTiVg) 
+*	Estimated Infection Fatality Rate (IFR) of COVID-19 in early 2020 from publicly available case and death data, resulting in the first IFR estimate for a United States population
+* Inferred undiagnosed infections using a Bayesian framework, while still accounting for age differences and variances in incubation and reporting delay distributions
+*	Compared global fatality rates to identify root causes for international differences in mortality outcomes, and found that income inequality is a major driving factor for mortality outcomes for people aged 40-60
+*	1st author on resulting publication; in review, with a preprint available at: https://bit.ly/3abTiVg 
+
+### Postbac Student Researcher, 11/2019–08/2020, Stanford University, Stanford, CA
+* Aggregated qualitative data on the lifespans and environmental persistence of 150 parasites and pathogens; found that diseases with environmental components are more difficult to control and eradicate
+* Published findings available at: [https://bit.ly/3c30owl](https://bit.ly/3c30owl) 
+
+### Undergraduate Student Researcher, 06/2015 – 06/2018, Stanford University, Stanford, CA
+* Constructed a stochastic model of the population genetics of the freshwater snail responsible for transmitting schistosomiasis, a Neglected Tropical Disease and a disease of poverty 
+* Projected theoretical changes to local disease burden after introducing a CRISPR/Cas9-mediated gene drive designed to confer resistance to the snail hosts
+* Findings in review, with a preprint available at: [https://bit.ly/3Mxg4oa](https://bit.ly/3Mxg4oa) 
 
 ### Teaching Assistant, 09/2020 – 08/2022, University of California Santa Cruz, Santa Cruz, CA
 * BIOE 109: Evolution, Fall 2020
@@ -67,14 +71,13 @@ Coha-Gunderson Prize in Speculative Futures (2022)
 * Mentored undergraduate students in the process of applying to graduate schools
 * Provided undergraduate students with opportunities to gain lab and field experience
 
-### Postbac Student Researcher, 11/2019–08/2020, Stanford University, Stanford, CA
-* Compared the lifespans and environmental persistence of 150 parasites and pathogens; found that diseases with environmental components are more difficult to control and eradicate
-* Published findings available at: [https://bit.ly/3c30owl](https://bit.ly/3c30owl) 
+# Awards
 
-### Undergraduate Student Researcher, 06/2015 – 06/2018, Stanford University, Stanford, CA
-* Constructed a stochastic model of the population genetics of the freshwater snail responsible for transmitting schistosomiasis, a Neglected Tropical Disease and a disease of poverty 
-* Projected theoretical changes to local disease burden after introducing a CRISPR/Cas9-mediated gene drive designed to confer resistance to the snail hosts
-* Findings in review, with a preprint available at: [https://bit.ly/3Mxg4oa](https://bit.ly/3Mxg4oa) 
+National Science Foundation Graduate Research Fellowship Program Winner (2020)
+
+University of California Santa Cruz Regent's Fellowship (2020)
+
+Coha-Gunderson Prize in Speculative Futures (2022)
 
 # Publications
 
