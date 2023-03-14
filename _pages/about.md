@@ -9,7 +9,11 @@ redirect_from:
 ---
 
 # Objective
-I am a recently graduated Masters' student with experience in epidemiological statistics and ecological modeling. I'm seeking industry or nonprofit applications of data science and machine learning.
+I am a research analyst with the City College of San Francisco, working to improve the California community college experience with data-driven solutions. I come from a background of epidemiological statistics and ecological modeling. I am a creative problem solver, an artist, and a climber.
+
+# Current Position
+
+Administrative Analyst - [Office of Research and Planning at the City College of San Francisco](https://www.ccsf.edu/about-ccsf/administration/academic-institutional-affairs/institutional-advancement-and-effectiveness/office-research-planning)
 
 # Education
 
@@ -42,6 +46,10 @@ B.S. Bioengineering with Honors (June 2018), [De Leo Lab](https://deleolab.stanf
 **Additional Skills:** Statistical analysis, Bayesian inference, Markov chain Monte Carlo, Mathematical modeling, Data visualization, Science communication
 
 # Experience
+
+### Administrative Analyst, 02/2023 - present, City College of San Francisco, San Francisco, CA
+* Assess patterns in enrollment, equity, and learning outcomes to promote instiutional effectiveness
+* Use SQL queries to retrieve information for easily-interpretable reports and data visualizations for faculty members and administrators to reference
 
 ### Graduate Student Researcher, 09/2020 – 09/2022, University of California Santa Cruz, Santa Cruz, CA
 *	Estimated Infection Fatality Rate (IFR) of COVID-19 in early 2020 from publicly available case and death data, resulting in the first IFR estimate for a United States population
